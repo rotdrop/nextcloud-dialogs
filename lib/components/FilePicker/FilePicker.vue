@@ -133,6 +133,8 @@ const dialogProps = computed(() => ({
 	navigationClasses: ['file-picker__navigation'],
 }))
 
+const awaitingNodes = ref<boolean>(false)
+
 /**
  * Map buttons to Dialog buttons by wrapping the callback function to pass the selected files
  */
@@ -144,6 +146,7 @@ const dialogButtons = computed(() => {
 	return buttons.map((button) => ({
 		...button,
 		callback: async () => {
+			awaitingNodes.value = true
 			const nodes = selectedFiles.value.length === 0 && props.allowPickDirectory ? [await getFile(currentPath.value)] : selectedFiles.value as Node[]
 			button.callback(nodes)
 			emit('close', nodes)
@@ -272,7 +275,7 @@ const onCreateFolder = async (name: string) => {
  * @param open If the dialog is open
  */
 const handleClose = (open: boolean) => {
-	if (!open) {
+	if (!open && !awaitingNodes.value) {
 		emit('close')
 	}
 }
