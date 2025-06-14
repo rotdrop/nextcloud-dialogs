@@ -10,10 +10,11 @@
 		:message="text"
 		@update:open="$emit('close', false)">
 		<NcNoteCard v-if="severity" :type="severity">
-			<p v-text="text" />
+			<!-- eslint-disable-next-line vue/no-v-html -->
+			<div v-if="html" v-html="html" />
+			<p v-else v-text="text" />
 		</NcNoteCard>
-		<!-- eslint-disable-next-line vue/no-v-html -->
-		<div v-if="html" v-html="html" />
+		<div v-else="html" v-html="html" />
 	</NcDialog>
 </template>
 
