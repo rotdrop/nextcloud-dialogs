@@ -20,6 +20,7 @@ export class Dialog {
 	#text: string
 	#buttons: IDialogButton[]
 	#severity?: IDialogSeverity
+	#dialogClasses: any
 
 	/** @deprecated */
 	#html?: string
@@ -29,12 +30,14 @@ export class Dialog {
 		text: string,
 		buttons: IDialogButton[] = [],
 		severity?: IDialogSeverity,
+		dialogClasses?: [],
 	) {
 		this.#name = name
 		this.#text = text
 		this.#buttons = buttons
 		this.#severity = severity
 		this.#html = undefined
+		this.#dialogClasses = dialogClasses
 	}
 
 	/**
@@ -90,6 +93,7 @@ export class DialogBuilder {
 	#text: string
 	#name: string
 	#buttons: IDialogButton[]
+	#dialogClasses: any
 
 	constructor(name?: string) {
 		this.#severity = undefined
@@ -129,6 +133,15 @@ export class DialogBuilder {
 	}
 
 	/**
+	 * Set additional dialog CSS classes
+	 * @param dialogClasses any
+	 */
+	setDialogClasses(dialogClasses: any) {
+		this.#dialogClasses = dialogClasses
+		return this
+	}
+
+	/**
 	 * Set buttons from array
 	 *
 	 * @param buttons Either an array of dialog buttons
@@ -152,7 +165,7 @@ export class DialogBuilder {
 	}
 
 	build(): Dialog {
-		return new Dialog(this.#name, this.#text, this.#buttons, this.#severity)
+		return new Dialog(this.#name, this.#text, this.#buttons, this.#severity, this.#dialogClasses)
 	}
 }
 
