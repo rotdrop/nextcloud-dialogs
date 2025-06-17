@@ -23,6 +23,7 @@ export class Dialog {
 	#buttons: IDialogButton[]
 	#severity?: DialogSeverity
 	#dialog?: Vue
+	#dialogClasses: any
 
 	/** @deprecated */
 	#html?: string
@@ -32,6 +33,7 @@ export class Dialog {
 		text: string,
 		buttons: IDialogButton[] = [],
 		severity?: DialogSeverity,
+		dialogClasses?: [],
 	) {
 		this.#name = name
 		this.#text = text
@@ -39,6 +41,7 @@ export class Dialog {
 		this.#severity = severity
 		this.#dialog = undefined
 		this.#html = undefined
+		this.#dialogClasses = dialogClasses
 	}
 
 	/**
@@ -67,6 +70,7 @@ export class Dialog {
 					text: this.#text,
 					severity: this.#severity,
 					html: this.#html,
+					dialogClasses: this.#dialogClasses,
 				},
 				resolve,
 			)
@@ -107,6 +111,7 @@ export class DialogBuilder {
 	#text: string
 	#name: string
 	#buttons: IDialogButton[]
+	#dialogClasses: any
 
 	constructor(name?: string) {
 		this.#severity = undefined
@@ -143,6 +148,15 @@ export class DialogBuilder {
 	}
 
 	/**
+	 * Set additional dialog CSS classes
+	 * @param dialogClasses any
+	 */
+	setDialogClasses(dialogClasses: any) {
+		this.#dialogClasses = dialogClasses
+		return this
+	}
+
+	/**
 	 * Set buttons from array
 	 * @param buttons Either an array of dialog buttons
 	 */
@@ -164,7 +178,7 @@ export class DialogBuilder {
 	}
 
 	build() {
-		return new Dialog(this.#name, this.#text, this.#buttons, this.#severity)
+		return new Dialog(this.#name, this.#text, this.#buttons, this.#severity, this.#dialogClasses)
 	}
 
 }

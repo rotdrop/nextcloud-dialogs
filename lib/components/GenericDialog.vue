@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<NcDialog dialog-classes="nc-generic-dialog"
+	<NcDialog :dialog-classes="['nc-generic-dialog', dialogClasses]"
 		:buttons="buttons"
 		:name="name"
 		:message="text"
@@ -52,6 +52,11 @@ const props = defineProps<{
 	 * Severity of the dialog - if a notecard is used
 	 */
 	severity?: DialogSeverity
+
+	/**
+	 * Custom dialog classes in addition to nc-generic-dialog
+	 */
+	dialogClasses?: any
 }>()
 
 /**
