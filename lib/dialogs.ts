@@ -20,6 +20,7 @@ export class Dialog {
 	#text: string
 	#buttons: IDialogButton[]
 	#severity?: IDialogSeverity
+	#dialogClasses: unknown
 
 	/** @deprecated */
 	#html?: string
@@ -29,12 +30,14 @@ export class Dialog {
 		text: string,
 		buttons: IDialogButton[] = [],
 		severity?: IDialogSeverity,
+		dialogClasses?: unknown,
 	) {
 		this.#name = name
 		this.#text = text
 		this.#buttons = buttons
 		this.#severity = severity
 		this.#html = undefined
+		this.#dialogClasses = dialogClasses
 	}
 
 	/**
@@ -60,6 +63,7 @@ export class Dialog {
 				text: this.#text,
 				severity: this.#severity,
 				html: this.#html,
+				dialogClasses: this.#dialogClasses ?? [],
 			},
 		)
 		if (!result) {
@@ -90,12 +94,14 @@ export class DialogBuilder {
 	#text: string
 	#name: string
 	#buttons: IDialogButton[]
+	#dialogClasses: unknown
 
 	constructor(name?: string) {
 		this.#severity = undefined
 		this.#text = ''
 		this.#name = name ?? ''
 		this.#buttons = []
+		this.#dialogClasses = []
 	}
 
 	/**
@@ -129,6 +135,16 @@ export class DialogBuilder {
 	}
 
 	/**
+	 * Set additional dialog CSS classes
+	 *
+	 * @param dialogClasses any
+	 */
+	setDialogClasses(dialogClasses: unknown) {
+		this.#dialogClasses = dialogClasses
+		return this
+	}
+
+	/**
 	 * Set buttons from array
 	 *
 	 * @param buttons Either an array of dialog buttons
@@ -152,7 +168,7 @@ export class DialogBuilder {
 	}
 
 	build(): Dialog {
-		return new Dialog(this.#name, this.#text, this.#buttons, this.#severity)
+		return new Dialog(this.#name, this.#text, this.#buttons, this.#severity, this.#dialogClasses)
 	}
 }
 
