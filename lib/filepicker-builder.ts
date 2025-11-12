@@ -4,7 +4,7 @@
  */
 
 import type { IFilePickerButton, IFilePickerButtonFactory, IFilePickerCanPick, IFilePickerFilter } from './components/types'
-import type { Node } from '@nextcloud/files'
+import { type Node, FileType } from '@nextcloud/files'
 
 import { basename } from '@nextcloud/paths'
 import { spawnDialog } from '@nextcloud/vue/functions/dialog'
@@ -212,6 +212,7 @@ export class FilePickerBuilder<IsMultiSelect extends boolean> {
 			const node = nodes[0]
 			const target = node?.displayname || basename(path)
 
+			const isDirectory = nodes.length === 0 || nodes.reduce((result: boolean, node: Node) => result || node.type === FileType.Folder, false)
 			if (type === FilePickerType.Choose) {
 				let label = t('Choose')
 				if (nodes.length === 1) {
@@ -223,6 +224,7 @@ export class FilePickerBuilder<IsMultiSelect extends boolean> {
 					callback: () => {},
 					type: 'primary',
 					label,
+					disabled: !this.directoriesAllowed && isDirectory,
 				})
 			}
 			if (type === FilePickerType.CopyMove || type === FilePickerType.Copy) {
@@ -231,6 +233,7 @@ export class FilePickerBuilder<IsMultiSelect extends boolean> {
 					label: target ? t('Copy to {target}', { target }) : t('Copy'),
 					icon: IconCopy,
 					variant: type === FilePickerType.Copy ? 'primary' : 'secondary',
+					disabled: !this.directoriesAllowed && isDirectory,
 				})
 			}
 			if (type === FilePickerType.CopyMove || type === FilePickerType.Move) {
@@ -239,6 +242,7 @@ export class FilePickerBuilder<IsMultiSelect extends boolean> {
 					label: target ? t('Move to {target}', { target }) : t('Move'),
 					icon: IconMove,
 					variant: 'primary', // move is always primary - also on copy-move
+					disabled: !this.directoriesAllowed && isDirectory,
 				})
 			}
 			return buttons
