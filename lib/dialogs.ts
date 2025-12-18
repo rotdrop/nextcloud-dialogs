@@ -21,6 +21,9 @@ export class Dialog {
 	#buttons: IDialogButton[]
 	#severity?: IDialogSeverity
 
+	/** @deprecated */
+	#html?: string
+
 	constructor(
 		name: string,
 		text: string,
@@ -31,6 +34,16 @@ export class Dialog {
 		this.#text = text
 		this.#buttons = buttons
 		this.#severity = severity
+		this.#html = undefined
+	}
+
+	/**
+	 * @deprecated DO NOT USE! It will be removed in the near future!
+	 * @param html HTML content
+	 */
+	setHTML(html: string) {
+		this.#html = html
+		return this
 	}
 
 	/**
@@ -46,6 +59,7 @@ export class Dialog {
 				name: this.#name,
 				text: this.#text,
 				severity: this.#severity,
+				html: this.#html,
 			},
 		)
 		if (!result) {
