@@ -25,7 +25,6 @@ export class Dialog {
 	#dialog?: Vue
 	#dialogClasses: any
 
-	/** @deprecated */
 	#html?: string
 
 	constructor(
@@ -45,7 +44,6 @@ export class Dialog {
 	}
 
 	/**
-	 * @deprecated DO NOT USE! It will be removed in the near future!
 	 * @param html HTML content
 	 */
 	setHTML(html: string) {
