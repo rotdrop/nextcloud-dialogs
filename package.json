@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "build": "vite --mode production build",
+    "prepare": "npm run build",
     "build:doc": "npm run dev && npm run doc",
     "dev": "vite --mode development build",
     "doc": "typedoc --tsconfig tsconfig-typedoc.json --highlightLanguages vue --plugin typedoc-plugin-missing-exports --out dist/doc dist/index.d.ts dist/filepicker.d.ts && touch dist/doc/.nojekyll",
