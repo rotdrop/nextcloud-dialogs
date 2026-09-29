@@ -4,7 +4,7 @@
 -->
 <template>
 	<NcDialog
-		dialogClasses="nc-generic-dialog"
+		:dialogClasses="['nc-generic-dialog', dialogClasses]"
 		:buttons="dialogButtons"
 		:name
 		:message="text"
@@ -52,6 +52,11 @@ const props = defineProps<{
 	 * Severity of the dialog - if a notecard is used
 	 */
 	severity?: IDialogSeverity
+
+	/**
+	 * Custom dialog classes in addition to nc-generic-dialog
+	 */
+	dialogClasses?: unknown
 }>()
 
 const emit = defineEmits<{
