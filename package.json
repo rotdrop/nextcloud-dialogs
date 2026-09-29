@@ -25,6 +25,7 @@
     "dist"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "build": "vite --mode production build",
     "build:doc": "npm run dev && npm run doc",
     "dev": "vite --mode development build",
@@ -94,7 +95,7 @@
     "vue-tsc": "^3.3.9"
   },
   "engines": {
-    "node": "^20 || ^22 || ^24"
+    "node": "^20 || ^22 || ^24 || >=26.0.0"
   },
   "devEngines": {
     "packageManager": [
@@ -106,7 +107,7 @@
     ],
     "runtime": {
       "name": "node",
-      "version": "^24.0.0"
+      "version": "^24.0.0 || >=26.0.0"
     }
   }
 }
